@@ -1,0 +1,6 @@
+com\canasta\model\Mensaje.class
+com\canasta\LaCanastaFelizApplication.class
+com\canasta\repository\MensajeRepository.class
+com\canasta\controller\ContactoController.class
+com\canasta\controller\CatalogoController.class
+com\canasta\controller\HomeController.class

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contáctanos | La Canasta Feliz</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Tu archivo CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body class="bg-light">
+
+<header class="mb-4">
+    <h1 class="text-center">La Canasta Feliz</h1>
+</header>
+
+<div class="container mt-5 mb-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4 text-success">Contáctanos</h2>
+
+        <form th:action="@{/contacto}" th:object="${mensaje}" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Nombre:</label>
+                <input type="text" th:field="*{nombre}" class="form-control" placeholder="Tu nombre completo">
+                <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Correo:</label>
+                <input type="email" th:field="*{correo}" class="form-control" placeholder="correo@ejemplo.com">
+                <div class="text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Asunto:</label>
+                <input type="text" th:field="*{asunto}" class="form-control" placeholder="Motivo del mensaje">
+                <div class="text-danger" th:if="${#fields.hasErrors('asunto')}" th:errors="*{asunto}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mensaje:</label>
+                <textarea th:field="*{contenido}" class="form-control" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+                <div class="text-danger" th:if="${#fields.hasErrors('contenido')}" th:errors="*{contenido}"></div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-success">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer class="mt-5 text-center">
+    <p>© 2025 La Canasta Feliz</p>
+</footer>
+
+</body>
+</html>
