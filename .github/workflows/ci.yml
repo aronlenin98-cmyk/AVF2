@@ -1,4 +1,4 @@
-name: Integración Continua (CI)
+name: Integración Continua (CI) Java/Maven
 
 on:
   push:
@@ -14,17 +14,12 @@ jobs:
     - name: Obtener el código del repositorio
       uses: actions/checkout@v4
 
-    - name: Configurar el entorno de Node.js
-      uses: actions/setup-node@v4
+    - name: Configurar el entorno de Java (JDK)
+      uses: actions/setup-java@v4
       with:
-        node-version: '18' # Ajusta esta versión si usas una diferente
-        cache: 'npm'
+        java-version: '17' # Puedes cambiarlo a '11' o '21' dependiendo de qué versión de Java usaste
+        distribution: 'temurin' # Distribución estándar y recomendada de Java
+        cache: 'maven' # GitHub cacheará las dependencias de tu pom.xml automáticamente
 
-    - name: Instalar dependencias
-      run: npm ci # Es preferible 'npm ci' sobre 'npm install' para servidores automatizados
-
-    - name: Construir el proyecto (Build)
-      run: npm run build --if-present
-      
-    - name: Ejecutar pruebas automatizadas
-      run: npm test --if-present
+    - name: Construir y probar el proyecto con Maven
+      run: mvn clean install
