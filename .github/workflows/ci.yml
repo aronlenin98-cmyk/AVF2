@@ -22,4 +22,4 @@ jobs:
         cache: 'maven' # GitHub cacheará las dependencias de tu pom.xml automáticamente
 
     - name: Construir y probar el proyecto con Maven
-      run: mvn clean install
+      run: mvn clean install -f AVF2/pom.xml
