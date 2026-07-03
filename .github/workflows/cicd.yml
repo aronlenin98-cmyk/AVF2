@@ -1,0 +1,40 @@
+name: CI/CD Pipeline Java
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # --- CRITERIO 2: INTEGRACIÓN CONTINUA (CI) ---
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configurar Java 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Construir y probar (CI)
+      run: mvn clean install -f AVF2/pom.xml
+
+  # --- CRITERIO 3: ENTREGA CONTINUA (CD) ---
+  deploy:
+    needs: build # Esto es clave: el CD espera a que el CI termine sin errores
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # Solo despliega si el código está en la rama 'main'
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Empaquetar el proyecto (.jar)
+      run: mvn clean package -DskipTests -f AVF2/pom.xml
+
+    - name: Desplegar a Producción
+      # Aquí irán los comandos exactos de tu proveedor de nube
+      run: echo "Iniciando la entrega continua hacia la nube..."
