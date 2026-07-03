@@ -1,0 +1,37 @@
+name: Integración Continua (CI)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    # Configuramos el directorio de trabajo por defecto para los comandos 'run'
+    defaults:
+      run:
+        working-directory: ./nombre-de-tu-subcarpeta
+
+    steps:
+    - name: Obtener el código
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        # Le indicamos la ruta exacta del archivo para la caché
+        cache-dependency-path: ./nombre-de-tu-subcarpeta/package-lock.json
+
+    - name: Instalar dependencias
+      run: npm ci
+
+    - name: Construir el proyecto
+      run: npm run build --if-present
+      
+    - name: Ejecutar pruebas
+      run: npm test --if-present
